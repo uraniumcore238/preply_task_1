@@ -33,7 +33,6 @@ class User(task_4.User):
 
 
 user_1 = User("test_user", "Test@123")
-
 user_1.save_to_json()
 
 user_2 = User.read_from_json("json_user.json")
