@@ -77,8 +77,8 @@ class User:
     def to_dict(self) -> dict:
         return {
             "username": self.username,
-            "password": self.password_hash,
-            "created_at": self.created_at,
+            "hash_password": self.password_hash,
+            "created_at": self.created_at.isoformat(),
         }
 
 
@@ -90,11 +90,11 @@ def login(user: User, password: str) -> None:
         print("Login failed")
 
 
-user_1 = User("test_user", "Test@123")
-user_2 = User("test_user", "Test@124")
+# user_1 = User("test_user", "Test@123")
+# user_2 = User("test_user", "Test@124")
 
-login(user_1, "Test@123")
-login(user_2, "Test@123")
+# login(user_1, "Test@123")
+# login(user_2, "Test@123")
 
 
 """
