@@ -77,7 +77,7 @@ class User:
     def to_dict(self) -> dict:
         return {
             "username": self.username,
-            "hash_password": self.password_hash,
+            "password_hash": self.password_hash,
             "created_at": self.created_at.isoformat(),
         }
 
