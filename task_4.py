@@ -81,6 +81,18 @@ class User:
             "created_at": self.created_at.isoformat(),
         }
 
+    @classmethod
+    def from_dict(cls, data: dict) -> "User":
+        required_keys = ("username", "password_hash", "created_at")
+        for key in required_keys:
+            if key not in data:
+                raise ValueError(f"Missing required key: {key}")
+
+        user = cls.__new__(cls)
+        user.username = data["username"]
+        user.password_hash = data["password_hash"]
+        user.created_at = datetime.fromisoformat(data["created_at"])
+        return user
 
 
 def login(user: User, password: str) -> None:
@@ -95,17 +107,3 @@ def login(user: User, password: str) -> None:
 
 # login(user_1, "Test@123")
 # login(user_2, "Test@123")
-
-
-"""
-Explanation of Password Security Risks
-Хранить пароли в открытом виде небезопасно. Если злоумышленник получит доступ к базе данных, он сможет увидеть 
-настоящие пароли всех пользователей. Многие люди используют один и тот же пароль на разных сайтах, поэтому утечка 
-может привести к компрометации других аккаунтов.
-Чтобы избежать этого, пароли хранятся в виде хеша. Хеш — это результат необратимого преобразования пароля. 
-Во время входа в систему введенный пароль снова хешируется, и полученный хеш сравнивается с сохраненным. 
-Если хеши совпадают, пользователь успешно проходит аутентификацию.
-Для данного задания используется алгоритм SHA-256 из библиотеки hashlib. 
-В реальных приложениях рекомендуется использовать специальные алгоритмы для хранения паролей, такие как bcrypt, 
-scrypt или Argon2, поскольку они используют соль и защищают от атак перебором значительно лучше, чем обычный SHA-256.
-"""

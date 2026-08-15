@@ -50,3 +50,6 @@ Thumbs.db
 
 # JSON data (если это временные файлы проекта)
 *.json
+
+# cursor
+*.cursor
