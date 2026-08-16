@@ -1,4 +1,5 @@
 import json
+from unittest import case
 from xml.dom import ValidationErr
 
 from task_5 import User
@@ -17,47 +18,48 @@ def main():
 
         choice = input("Choose an option: ").strip()
 
-        if choice == "1":
-            username = input("Enter username: ").strip()
-            password = input("Enter password: ")
+        match choice:
+            case "1":
+                username = input("Enter username: ").strip()
+                password = input("Enter password: ")
 
-            try:
-                user = User(username, password)
-                print("User created successfully.")
-            except ValidationErr as error:
-                print(f"Error: {error}")
+                try:
+                    user = User(username, password)
+                    print("User created successfully.")
+                except ValidationErr as error:
+                    print(f"Error: {error}")
 
-        elif choice == "2":
-            if user is None:
-                print("No user to save.")
-                continue
+            case "2":
+                if user is None:
+                    print("No user to save.")
+                    continue
 
-            user.save_to_json()
-            print("User saved successfully.")
+                user.save_to_json()
+                print("User saved successfully.")
 
-        elif choice == "3":
-            try:
-                user = User.read_from_json("json_user.json")
-                print("User loaded successfully.")
-            except FileNotFoundError:
-                print("File not found.")
-            except json.JSONDecodeError:
-                print("Invalid JSON file.")
-            except ValueError as error:
-                print(f"Invalid user data: {error}")
+            case "3":
+                try:
+                    user = User.read_from_json("json_user.json")
+                    print("User loaded successfully.")
+                except FileNotFoundError:
+                    print("File not found.")
+                except json.JSONDecodeError:
+                    print("Invalid JSON file.")
+                except ValueError as error:
+                    print(f"Invalid user data: {error}")
 
-        elif choice == "4":
-            if user is None:
-                print("No user loaded.")
-            else:
-                print(user)
+            case "4":
+                if user is None:
+                    print("No user loaded.")
+                else:
+                    print(user)
 
-        elif choice == "5":
-            print("Goodbye!")
-            break
+            case "5":
+                print("Goodbye!")
+                break
 
-        else:
-            print("Invalid option. Please choose 1-5.")
+            case _:
+                print("Invalid option. Please choose 1-5.")
 
 
 if __name__ == "__main__":
